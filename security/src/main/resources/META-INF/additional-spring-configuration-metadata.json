@@ -1,0 +1,32 @@
+{"properties": [
+  {
+    "name": "bsterfano79.it.jwtCookieName",
+    "type": "java.lang.String",
+    "description": "A description for 'bsterfano79.it.jwtCookieName'"
+  },
+  {
+    "name": "bsterfano79.it.jwtSecret",
+    "type": "java.lang.String",
+    "description": "A description for 'bsterfano79.it.jwtSecret'"
+  },
+  {
+    "name": "bsterfano79.it.jwtCookieName",
+    "type": "java.lang.String",
+    "description": "A description for 'bsterfano79.it.jwtCookieName'"
+  },
+  {
+    "name": "bsterfano79.it.jwtCookieName",
+    "type": "java.lang.String",
+    "description": "A description for 'bsterfano79.it.jwtCookieName'"
+  },
+  {
+    "name": "bsterfano79.it.jwtCookieName",
+    "type": "java.lang.String",
+    "description": "A description for 'bsterfano79.it.jwtCookieName'"
+  },
+  {
+    "name": "bsterfano79.it.jwtCookieName",
+    "type": "java.lang.String",
+    "description": "A description for 'bsterfano79.it.jwtCookieName'"
+  }
+]}
