@@ -18,8 +18,9 @@ public class HomeController {
 
 	@GetMapping("/")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
-	public String privateAccess() {
-		return "Private Content.";
+	public ResponseEntity<Object> privateAccess() {
+		return ResponseEntity.status(HttpStatus.OK).body(Map.of(
+	            "message", "Questo end-point è privato hai l'autorizzazione"));
 	}
 	
 	@GetMapping(path = "/public", produces = MediaType.APPLICATION_JSON_VALUE)
