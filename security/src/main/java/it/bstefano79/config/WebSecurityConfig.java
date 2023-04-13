@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import it.bstefano79.config.jwt.AuthEntryPointJwt;
 import it.bstefano79.config.jwt.AuthTokenFilter;
+import it.bstefano79.models.ERole;
 import it.bstefano79.services.UserDetailsServiceImpl;
 
 @Configuration
@@ -60,7 +61,8 @@ public class WebSecurityConfig {
         .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
         .authorizeHttpRequests().requestMatchers("/api/auth/**"). permitAll()
         .requestMatchers("/api/public/**").permitAll()
-        .anyRequest().authenticated();
+        .requestMatchers("/api/album/**").hasAnyAuthority(ERole.ROLE_ADMIN.toString(),ERole.ROLE_USER.toString())
+        .and().exceptionHandling().accessDeniedPage("/api/public/404");
     
     http.authenticationProvider(authenticationProvider());
 
