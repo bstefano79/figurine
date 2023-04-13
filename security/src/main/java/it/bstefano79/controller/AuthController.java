@@ -87,7 +87,7 @@ public class AuthController {
     		userDto.getEmail(),
                          encoder.encode(userDto.getPassword()));
 
-    List<String> strRoles = userDto.getRole();
+    List<String> strRoles = userDto.getRoles();
     Set<Role> roles = new HashSet<>();
 
     if (strRoles == null) {

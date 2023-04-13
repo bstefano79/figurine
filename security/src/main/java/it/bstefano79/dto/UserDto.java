@@ -11,14 +11,14 @@ public class UserDto {
 	
 	private String password;
 	
-	private List<String> role;
+	private List<String> roles;
 
-	public UserDto(Long id, String username, String email, List<String> role) {
+	public UserDto(Long id, String username, String email, List<String> roles) {
 		super();
 		this.id = id;
 		this.username = username;
 		this.email = email;
-		this.setRole(role);
+		this.setRoles(roles);
 	}
 
 	public Long getId() {
@@ -53,11 +53,11 @@ public class UserDto {
 		this.password = password;
 	}
 
-	public List<String> getRole() {
-		return role;
+	public List<String> getRoles() {
+		return roles;
 	}
 
-	public void setRole(List<String> role) {
-		this.role = role;
+	public void setRoles(List<String> roles) {
+		this.roles = roles;
 	}
 }

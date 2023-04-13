@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("/api")
-public class HomeController {
+public class ApiController {
 
 	@GetMapping("/")
 	@PreAuthorize("hasRole('USER') or hasRole('ADMIN')")
