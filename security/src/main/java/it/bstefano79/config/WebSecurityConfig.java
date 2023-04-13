@@ -18,7 +18,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import it.bstefano79.config.jwt.AuthEntryPointJwt;
 import it.bstefano79.config.jwt.AuthTokenFilter;
 import it.bstefano79.models.ERole;
-import it.bstefano79.services.UserDetailsServiceImpl;
+import it.bstefano79.user.details.services.UserDetailsServiceImpl;
 
 @Configuration
 @EnableMethodSecurity

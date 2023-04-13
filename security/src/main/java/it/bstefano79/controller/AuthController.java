@@ -29,7 +29,7 @@ import it.bstefano79.entity.User;
 import it.bstefano79.models.ERole;
 import it.bstefano79.repository.RoleRepository;
 import it.bstefano79.repository.UserRepository;
-import it.bstefano79.services.UserDetailsImpl;
+import it.bstefano79.user.details.services.UserDetailsImpl;
 import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
