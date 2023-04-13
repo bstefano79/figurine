@@ -3,11 +3,7 @@ package it.bstefano79.entity;
 import java.util.HashSet;
 import java.util.Set;
 
-import it.bstefano79.models.EAlbumType;
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -24,24 +20,29 @@ import jakarta.validation.constraints.Size;
 @Table(name = "albums")
 public class Album {
 	
-	  @Id
-	  @GeneratedValue(strategy = GenerationType.IDENTITY)
-	  private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Integer id;
 	  
-	  @NotBlank
-	  @NotNull
-	  @Size(max = 50)
-	  private String name;
+	@NotBlank
+	@NotNull
+	@Size(max = 50)
+	private String name;
 	  
-	  @Enumerated(EnumType.STRING)
-	  @Column(length = 20)
-	  private EAlbumType type;
-	  
-	  @ManyToMany(fetch = FetchType.LAZY)
-	  @JoinTable(name = "album_types", joinColumns =
-			  @JoinColumn(name = "album_id", referencedColumnName = "id"), 
+	@ManyToMany(fetch = FetchType.LAZY)
+		@JoinTable(name = "album_types", joinColumns =
+			@JoinColumn(name = "album_id", referencedColumnName = "id"), 
 	  			inverseJoinColumns =  @JoinColumn(name = "type_id"))
-	  private Set<AlbumType> types = new HashSet<>();
+	private Set<AlbumType> types = new HashSet<>();
+	
+	public Album(){
+		
+	}
+	
+	public Album(@NotBlank @NotNull @Size(max = 50) String name) {
+		super();
+		this.name = name;
+	}
 
 	public Integer getId() {
 		return id;
@@ -59,12 +60,12 @@ public class Album {
 		this.name = name;
 	}
 
-	public EAlbumType getType() {
-		return type;
+	public Set<AlbumType> getTypes() {
+		return types;
 	}
 
-	public void setType(EAlbumType type) {
-		this.type = type;
+	public void setTypes(Set<AlbumType> types) {
+		this.types = types;
 	}
 
 }

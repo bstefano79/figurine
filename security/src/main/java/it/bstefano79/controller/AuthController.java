@@ -2,11 +2,13 @@ package it.bstefano79.controller;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -114,7 +116,9 @@ public class AuthController {
     user.setRoles(roles);
     userRepository.save(user);
 
-    return ResponseEntity.ok("User registered successfully!");
+    
+    return ResponseEntity.status(HttpStatus.OK).body(Map.of(
+            "message", "Utente Registrato con successo!"));
   }
 
   @PostMapping("/signout")
