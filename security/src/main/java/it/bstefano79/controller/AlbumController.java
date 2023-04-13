@@ -40,9 +40,14 @@ public class AlbumController {
 	}
 	
 	@GetMapping("/{id}")
-	public Album getById(@PathVariable Integer id) {
-		return albumRepository.findById(id).
-				orElseThrow(() -> new RuntimeException("Error: L'album con id "+id+" non trovato!"));
+	public ResponseEntity<?> getById(@PathVariable Integer id) {
+		Album album = albumRepository.findById(id).orElse(null);
+		if(album!=null) {
+			return ResponseEntity.status(HttpStatus.OK).body(album);
+		}else
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
+		            "message", "Album con id "+id+" non trovato!"));
+				
 	}
 	
 	@PostMapping("/add")
