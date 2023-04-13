@@ -10,6 +10,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -34,12 +35,18 @@ public class AlbumController {
 	private AlbumTypeRepository albumTyRepository;
 	
 	@GetMapping("/")
-	public List<Album> privateAccess() {
+	public List<Album> getAlbum() {
 		return albumRepository.findAll();
 	}
 	
+	@GetMapping("/{id}")
+	public Album getById(@PathVariable Integer id) {
+		return albumRepository.findById(id).
+				orElseThrow(() -> new RuntimeException("Error: L'album con id "+id+" non trovato!"));
+	}
+	
 	@PostMapping("/add")
-	public ResponseEntity<?> registerUser(@Valid @RequestBody AlbumDto albumDto) {
+	public ResponseEntity<?> newAlbum(@Valid @RequestBody AlbumDto albumDto) {
 		Album album = new Album(albumDto.getName());
 		
 		List<String> strTypes = albumDto.getTypes();
