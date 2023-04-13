@@ -12,5 +12,7 @@ import it.bstefano79.entity.Album;
 public interface AlbumRepository extends JpaRepository<Album, Long>{
 	Optional<Album> findByName(String name);
 	
+	Optional<Album> findById(Integer id);
+	
 	List<Album> findAll();
 }
