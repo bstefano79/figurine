@@ -29,4 +29,10 @@ public class ApiController {
 	            "message", "Questo end-point non ha bisogno dell'autorizzazione"));
 	}
 	
+	@GetMapping(path = "/public/404", produces = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<Object> error404() {
+		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
+	            "message", "Errore questa risorsa non sembra esistere"));
+	}
+	
 }
