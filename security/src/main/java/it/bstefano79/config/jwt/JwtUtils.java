@@ -60,7 +60,7 @@ public class JwtUtils {
   }
   
   public Long getIdUserFromJwtToken(String token) {
-	    return (Long) Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().get("id");
+	    return ((Integer) Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().get("id")).longValue();
   }
 
   public boolean validateJwtToken(String authToken) {
