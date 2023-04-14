@@ -22,6 +22,7 @@ import it.bstefano79.entity.AlbumType;
 import it.bstefano79.models.EAlbumType;
 import it.bstefano79.repository.AlbumRepository;
 import it.bstefano79.repository.AlbumTypeRepository;
+import it.bstefano79.repository.FigurineAlbumRepository;
 import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -34,6 +35,9 @@ public class AlbumController {
 	@Autowired
 	private AlbumTypeRepository albumTyRepository;
 	
+	@Autowired
+	private FigurineAlbumRepository figurineAlbumRepository;
+	
 	@GetMapping("/")
 	public List<Album> getAlbum() {
 		return albumRepository.findAll();
@@ -41,8 +45,8 @@ public class AlbumController {
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getById(@PathVariable Integer id) {
-		Album album = albumRepository.findById(id).orElse(null);
-		if(album!=null) {
+		AlbumDto album = new AlbumDto(albumRepository.findById(id).orElse(null),figurineAlbumRepository.findAllByIdAlbum(id));
+		if(album.getId()!=null) {
 			return ResponseEntity.status(HttpStatus.OK).body(album);
 		}else
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
