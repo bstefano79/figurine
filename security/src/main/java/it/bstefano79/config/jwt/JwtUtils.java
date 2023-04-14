@@ -16,6 +16,8 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -43,7 +45,7 @@ public class JwtUtils {
   }
 
   public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
-    String jwt = generateTokenFromUsername(userPrincipal.getUsername());
+    String jwt = generateTokenFromUsernameAndId(userPrincipal.getUsername(),userPrincipal.getId());
     ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(24 * 60 * 60).httpOnly(true).build();
     return cookie;
   }
@@ -54,7 +56,11 @@ public class JwtUtils {
   }
 
   public String getUserNameFromJwtToken(String token) {
-    return Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().getSubject();
+    return (String) Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().get("username");
+  }
+  
+  public Long getIdUserFromJwtToken(String token) {
+	    return (Long) Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().get("id");
   }
 
   public boolean validateJwtToken(String authToken) {
@@ -76,9 +82,12 @@ public class JwtUtils {
     return false;
   }
   
-  public String generateTokenFromUsername(String username) {
+  public String generateTokenFromUsernameAndId(String username, Long id) {
+	  Map<String, Object> claims = new HashMap<String, Object>();
+	  claims.put("username", username);
+	  claims.put("id", id);
     return Jwts.builder()
-        .setSubject(username)
+        .setClaims(claims)
         .setIssuedAt(new Date())
         .setExpiration(new Date((new Date()).getTime() + jwtExpirationMs))
         .signWith(SignatureAlgorithm.HS512, jwtSecret)

@@ -25,25 +25,21 @@ public class ApiController {
 	@Autowired
 	private JwtUtils jwtUtils;
 	
-	@Autowired
-	private UserDetailsServiceImpl userDetailsService;
-	
 	@GetMapping(path = "/public", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<Object> allAccess(HttpServletRequest request) {
 		String jwt = jwtUtils.getJwtFromCookies(request);
-		UserDetails userDetails=null;
+		String username=null;
+		Long id=null;
 	    if (jwt != null && jwtUtils.validateJwtToken(jwt)) {
-	    	String username = jwtUtils.getUserNameFromJwtToken(jwt);
-	      
-
-	        userDetails = userDetailsService.loadUserByUsername(username);
+	    	username = jwtUtils.getUserNameFromJwtToken(jwt);
+	        id = jwtUtils.getIdUserFromJwtToken(jwt);
 	    }
 	    String message = "Questo end-point non ha bisogno dell'autorizzazione";
-	    if(userDetails==null)
+	    if(username==null)
 	    {
 	    	message+=" non sei loggato";
 	    }else {
-	    	message+=" sei loggato come "+userDetails.getUsername();
+	    	message+=" sei loggato come "+username+" con id "+id;
 	    }
 		return ResponseEntity.status(HttpStatus.OK).body(Map.of(
 	            "message", message));
