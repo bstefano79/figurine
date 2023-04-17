@@ -1,10 +1,41 @@
 package it.bstefano79.dto;
 
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
-
+import java.util.Map;
 
 import it.bstefano79.entity.Album;
 import it.bstefano79.entity.FigurineAlbum;
+
+class Figurina{
+	private Integer id;
+	
+	private String value;
+
+	public Figurina(Integer id, String value) {
+		super();
+		this.id = id;
+		this.value = value;
+	}
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
+
+	public String getValue() {
+		return value;
+	}
+
+	public void setValue(String value) {
+		this.value = value;
+	}
+}
+
 
 public class AlbumDto {
 	private Integer id;
@@ -13,7 +44,7 @@ public class AlbumDto {
 	
 	private List<String> types;
 	
-	private List<FigurinaDto> figurine;
+	private Map<FigurineTypesDto,List<Figurina>> figurine;
 	
 	public AlbumDto() {
 		
@@ -25,13 +56,23 @@ public class AlbumDto {
 			this.id=album.getId();
 			this.types=album.getTypes().stream().map(x->x.getName().name()).toList();
 			if(figurine!=null) {
-				this.figurine=figurine.stream().map(x->costructNameFig(x)).toList();
+				List<Figurina> lista = figurine.stream().map(x->costructNameFig(x)).toList();
+				if(lista!=null && lista.size()>0) {
+					this.figurine = new HashMap<FigurineTypesDto, List<Figurina>>();
+					for (FigurineAlbum figurina : figurine) {
+						FigurineTypesDto key = new FigurineTypesDto(figurina.getFigurineTypes());
+						if(!this.figurine.containsKey(key)){
+							this.figurine.put(key, new ArrayList<Figurina>());
+						}
+						this.figurine.get(key).add(costructNameFig(figurina));
+					}
+				}
 			}
 		}
 	}
 	
-	private FigurinaDto costructNameFig(FigurineAlbum f) {
-		return new FigurinaDto(f.getId(), f.getValue(), null, new FigurineTypesDto(f.getFigurineTypes()));
+	private Figurina costructNameFig(FigurineAlbum f) {
+		return new Figurina(f.getId(), f.getValue());
 	}
 	public Integer getId() {
 		return id;
@@ -57,11 +98,11 @@ public class AlbumDto {
 		this.types = types;
 	}
 
-	public List<FigurinaDto> getFigurine() {
+	public Map<FigurineTypesDto, List<Figurina>> getFigurine() {
 		return figurine;
 	}
 
-	public void setFigurine(List<FigurinaDto> figurine) {
+	public void setFigurine(Map<FigurineTypesDto, List<Figurina>> figurine) {
 		this.figurine = figurine;
 	}
 }
