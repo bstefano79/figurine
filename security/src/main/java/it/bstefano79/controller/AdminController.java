@@ -43,7 +43,7 @@ public class AdminController {
 		if(album!=null) {
 			figurineService.addsFigurineByAlbum(from, to, album);
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
-		            "message", "Figurine da "+from+" al "+to+" aggiunte all'Album con id "+idalbum+" non trovato!"));
+		            "message", "Figurine da "+from+" al "+to+" aggiunte all'Album con id "+idalbum));
 		}else
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
 		            "message", "Album con id "+idalbum+" non trovato!"));

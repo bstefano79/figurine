@@ -4,6 +4,7 @@ import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "figurine_types")
@@ -14,6 +15,10 @@ public class FigurineTypes {
 	
 	@Column(length = 30)
 	private String name;
+	
+	@Column
+	@NotNull
+	private boolean type_default = false;
 	
 	public FigurineTypes(){
 		
@@ -38,5 +43,13 @@ public class FigurineTypes {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public boolean isType_default() {
+		return type_default;
+	}
+
+	public void setType_default(boolean type_default) {
+		this.type_default = type_default;
 	}
 }
