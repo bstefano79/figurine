@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.bstefano79.dto.AlbumDto;
+import it.bstefano79.dto.AlbumWhitFigurineDto;
 import it.bstefano79.entity.Album;
 import it.bstefano79.entity.AlbumType;
 import it.bstefano79.repository.AlbumRepository;
@@ -27,20 +28,20 @@ public class AlbumService {
 	private FigurineAlbumRepository figurineAlbumRepository;
 	
 	public List<AlbumDto> findAll() {
-		return albumRepository.findAll().stream().map(x -> new AlbumDto(x,null)).toList();
+		return albumRepository.findAll().stream().map(x -> new AlbumDto(x)).toList();
 	}
 	
-	public List<AlbumDto> findAllWithFigurines() {
-		return albumRepository.findAll().stream().map(x -> new AlbumDto(x,figurineAlbumRepository.findAllByIdAlbum(x.getId()))).toList();
+	public List<AlbumWhitFigurineDto> findAllWithFigurines() {
+		return albumRepository.findAll().stream().map(x -> new AlbumWhitFigurineDto(x,figurineAlbumRepository.findAllByIdAlbum(x.getId()))).toList();
 	}
 	
 	public AlbumDto findById(Integer id){
 		
-		return new AlbumDto(albumRepository.findById(id).orElse(null),null);
+		return new AlbumDto(albumRepository.findById(id).orElse(null));
 	}
 	
-	public AlbumDto findByIdWithFigurines(Integer id){
-		return new AlbumDto(albumRepository.findById(id).orElse(null),figurineAlbumRepository.findAllByIdAlbum(id));
+	public AlbumWhitFigurineDto findByIdWithFigurines(Integer id){
+		return new AlbumWhitFigurineDto(albumRepository.findById(id).orElse(null),figurineAlbumRepository.findAllByIdAlbum(id));
 	}
 	
 	
@@ -56,7 +57,7 @@ public class AlbumService {
 		
 		if (strTypes == null || strTypes.size()==0) {
 			//adds in table value default and search
-			AlbumType albumType = this.findAlbumTypeFromName("GENERICO")
+			AlbumType albumType = albumTypeRepository.getTypeDefault()//this.findAlbumTypeFromName("GENERICO")
 					.orElseThrow(() -> new RuntimeException("Error: Album Type is not found."));
 			types.add(albumType);
 		}else {

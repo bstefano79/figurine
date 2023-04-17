@@ -21,6 +21,10 @@ public class AlbumType {
 	@Column(length = 20)
 	@NotNull
 	private String name;
+	
+	@Column
+	@NotNull
+	private boolean type_default = false;
 
 	public Integer getId() {
 		return id;

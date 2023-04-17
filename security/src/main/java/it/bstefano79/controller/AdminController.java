@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -17,6 +18,7 @@ import it.bstefano79.dto.AlbumDto;
 import it.bstefano79.dto.FigurineTypesDto;
 import it.bstefano79.service.AlbumService;
 import it.bstefano79.service.FigurineService;
+import jakarta.validation.Valid;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -51,5 +53,13 @@ public class AdminController {
 	@GetMapping("figurine/getalltypes")
 	public List<FigurineTypesDto> getAllTypesFigurine(){
 		return figurineService.returnAllTypes();
+	}
+	
+	@PostMapping("add")
+	public ResponseEntity<?> newAlbum(@Valid @RequestBody AlbumDto albumDto) {
+		this.albumService.newAlbum(albumDto);
+		
+		return ResponseEntity.status(HttpStatus.OK).body(Map.of(
+	            "message", "Album salvato con successo!"));
 	}
 }

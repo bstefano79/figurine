@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.bstefano79.dto.AlbumDto;
+import it.bstefano79.dto.AlbumWhitFigurineDto;
 import it.bstefano79.service.AlbumService;
 import jakarta.validation.Valid;
 
@@ -31,7 +32,7 @@ public class AlbumController {
 	}
 	
 	@GetMapping("/withfigurines")
-	public List<AlbumDto> getAlbumWithFigurines() {
+	public List<AlbumWhitFigurineDto> getAlbumWithFigurines() {
 		return albumService.findAllWithFigurines();
 	}
 	
@@ -55,13 +56,5 @@ public class AlbumController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
 		            "message", "Album con id "+id+" non trovato!"));
 				
-	}
-	
-	@PostMapping("/add")
-	public ResponseEntity<?> newAlbum(@Valid @RequestBody AlbumDto albumDto) {
-		this.albumService.newAlbum(albumDto);
-		
-		return ResponseEntity.status(HttpStatus.OK).body(Map.of(
-	            "message", "Album salvato con successo!"));
 	}
 }
