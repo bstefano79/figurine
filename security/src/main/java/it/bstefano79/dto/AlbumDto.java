@@ -2,6 +2,7 @@ package it.bstefano79.dto;
 
 import java.util.List;
 
+
 import it.bstefano79.entity.Album;
 import it.bstefano79.entity.FigurineAlbum;
 
@@ -12,7 +13,7 @@ public class AlbumDto {
 	
 	private List<String> types;
 	
-	private List<String> figurine;
+	private List<FigurinaDto> figurine;
 	
 	public AlbumDto() {
 		
@@ -29,10 +30,8 @@ public class AlbumDto {
 		}
 	}
 	
-	private String costructNameFig(FigurineAlbum f) {
-		String res=!("F".equals(f.getFigurineTypes().getId()))?
-				f.getFigurineTypes().getId():"";
-		return res+f.getValue();
+	private FigurinaDto costructNameFig(FigurineAlbum f) {
+		return new FigurinaDto(f.getId(), f.getValue(), null, new FigurineTypesDto(f.getFigurineTypes()));
 	}
 	public Integer getId() {
 		return id;
@@ -58,11 +57,11 @@ public class AlbumDto {
 		this.types = types;
 	}
 
-	public List<String> getFigurine() {
+	public List<FigurinaDto> getFigurine() {
 		return figurine;
 	}
 
-	public void setFigurine(List<String> figurine) {
+	public void setFigurine(List<FigurinaDto> figurine) {
 		this.figurine = figurine;
 	}
 }

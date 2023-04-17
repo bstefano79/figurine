@@ -7,7 +7,6 @@ import java.util.Set;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import it.bstefano79.dto.AlbumDto;
 import it.bstefano79.entity.Album;
@@ -16,7 +15,6 @@ import it.bstefano79.models.EAlbumType;
 import it.bstefano79.repository.AlbumRepository;
 import it.bstefano79.repository.AlbumTypeRepository;
 import it.bstefano79.repository.FigurineAlbumRepository;
-import jakarta.validation.Valid;
 
 @Service
 public class AlbumService {

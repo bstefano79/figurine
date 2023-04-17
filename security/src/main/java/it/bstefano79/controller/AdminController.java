@@ -11,8 +11,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import it.bstefano79.entity.Album;
-import it.bstefano79.repository.AlbumRepository;
+import it.bstefano79.dto.AlbumDto;
+import it.bstefano79.service.AlbumService;
+import it.bstefano79.service.FigurineService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
@@ -20,7 +21,10 @@ import it.bstefano79.repository.AlbumRepository;
 public class AdminController {
 	
 	@Autowired
-	private AlbumRepository albumRepository;
+	private AlbumService albumService;
+	
+	@Autowired
+	private FigurineService figurineService;
 	
 	/*aggiungere i servizi importante
 	vedere questo per salvare + entity
@@ -30,9 +34,11 @@ public class AdminController {
 	public ResponseEntity<?> getById(@PathVariable Integer idalbum,
 			@PathVariable Integer from,
 			@PathVariable Integer to) {
-		Album album = albumRepository.findById(idalbum).orElse(null);
+		AlbumDto album = albumService.findById(idalbum);
 		if(album!=null) {
-			return null;
+			figurineService.addsFigurineByAlbum(from, to, album);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
+		            "message", "Figurine da "+from+" al "+to+" aggiunte all'Album con id "+idalbum+" non trovato!"));
 		}else
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
 		            "message", "Album con id "+idalbum+" non trovato!"));
