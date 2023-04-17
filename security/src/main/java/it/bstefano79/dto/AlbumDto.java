@@ -54,7 +54,7 @@ public class AlbumDto {
 		if(album!=null) {
 			this.name=album.getName();
 			this.id=album.getId();
-			this.types=album.getTypes().stream().map(x->x.getName().name()).toList();
+			this.types=album.getTypes().stream().map(x->x.getName()).toList();
 			if(figurine!=null) {
 				List<Figurina> lista = figurine.stream().map(x->costructNameFig(x)).toList();
 				if(lista!=null && lista.size()>0) {

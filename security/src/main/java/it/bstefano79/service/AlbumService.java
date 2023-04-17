@@ -11,7 +11,6 @@ import org.springframework.stereotype.Service;
 import it.bstefano79.dto.AlbumDto;
 import it.bstefano79.entity.Album;
 import it.bstefano79.entity.AlbumType;
-import it.bstefano79.models.EAlbumType;
 import it.bstefano79.repository.AlbumRepository;
 import it.bstefano79.repository.AlbumTypeRepository;
 import it.bstefano79.repository.FigurineAlbumRepository;
@@ -44,12 +43,9 @@ public class AlbumService {
 		return new AlbumDto(albumRepository.findById(id).orElse(null),figurineAlbumRepository.findAllByIdAlbum(id));
 	}
 	
-	public Optional<AlbumType> findAlbumTypeFromName(EAlbumType name){
-		return albumTypeRepository.findByName(name);
-	}
 	
 	public Optional<AlbumType> findAlbumTypeFromName(String name){
-		return this.findAlbumTypeFromName(EAlbumType.getEAlbumTypeFromString(name));
+		return this.findAlbumTypeFromName(name);
 	}
 	
 	public void newAlbum(AlbumDto albumDto){
@@ -59,7 +55,8 @@ public class AlbumService {
 		Set<AlbumType> types = new HashSet<>();
 		
 		if (strTypes == null || strTypes.size()==0) {
-			AlbumType albumType = this.findAlbumTypeFromName(EAlbumType.GENERICO)
+			//adds in table value default and search
+			AlbumType albumType = this.findAlbumTypeFromName("GENERICO")
 					.orElseThrow(() -> new RuntimeException("Error: Album Type is not found."));
 			types.add(albumType);
 		}else {

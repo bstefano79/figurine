@@ -2,18 +2,19 @@ package it.bstefano79.models;
 
 import java.util.Arrays;
 
-public enum EAlbumType {
+@Deprecated
+public enum EAlbumTypeDeprecated {
 	GENERICO("GENERICO"), SPORT("SPORT"), SERIE_TV("SERIE_TV"), CARTONI("CARTONI"), CALCIO("CALCIO");
 	
 	String value;
 	
-	private EAlbumType(String value){
+	private EAlbumTypeDeprecated(String value){
 		this.value=value;
 	}
 	
-	public static EAlbumType getEAlbumTypeFromString(String name) {
+	public static EAlbumTypeDeprecated getEAlbumTypeFromString(String name) {
 		
-		for (EAlbumType t : Arrays.asList(EAlbumType.values())) {
+		for (EAlbumTypeDeprecated t : Arrays.asList(EAlbumTypeDeprecated.values())) {
 			if(t.value.equals(name)){
 				return t;
 			}

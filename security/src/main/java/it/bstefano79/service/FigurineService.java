@@ -10,7 +10,6 @@ import it.bstefano79.dto.FigurineTypesDto;
 import it.bstefano79.entity.Album;
 import it.bstefano79.entity.FigurineAlbum;
 import it.bstefano79.repository.AlbumRepository;
-import it.bstefano79.repository.AlbumTypeRepository;
 import it.bstefano79.repository.FigurineTypesRepository;
 
 @Service

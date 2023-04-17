@@ -1,6 +1,5 @@
 package it.bstefano79.entity;
 
-import it.bstefano79.models.EAlbumType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -19,10 +18,9 @@ public class AlbumType {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
 
-	@Enumerated(EnumType.STRING)
 	@Column(length = 20)
 	@NotNull
-	private EAlbumType name;
+	private String name;
 
 	public Integer getId() {
 		return id;
@@ -32,11 +30,11 @@ public class AlbumType {
 		this.id = id;
 	}
 
-	public EAlbumType getName() {
+	public String getName() {
 		return name;
 	}
 
-	public void setName(EAlbumType name) {
+	public void setName(String name) {
 		this.name = name;
 	}
 
