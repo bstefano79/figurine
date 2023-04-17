@@ -10,7 +10,4 @@ import it.bstefano79.models.EAlbumType;
 
 public interface AlbumTypeRepository extends JpaRepository<AlbumType, Long>{
 	Optional<AlbumType> findByName(EAlbumType name);
-	
-	@Query(value = "SELECT * FROM albumtypes at WHERE at.name = ?1", nativeQuery = true)
-	Optional<AlbumType> findByName(String name);
 }

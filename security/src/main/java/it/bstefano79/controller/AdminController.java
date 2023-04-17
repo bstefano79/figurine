@@ -22,12 +22,17 @@ public class AdminController {
 	@Autowired
 	private AlbumRepository albumRepository;
 	
+	/*aggiungere i servizi importante
+	vedere questo per salvare + entity
+	https://roytuts.com/spring-data-jpa-batch-insertion/*/
 	
-	@GetMapping("/{idalbum}")
-	public ResponseEntity<?> getById(@PathVariable Integer idalbum) {
+	@GetMapping("adds/figurine/{idalbum}/{from}/{to}")
+	public ResponseEntity<?> getById(@PathVariable Integer idalbum,
+			@PathVariable Integer from,
+			@PathVariable Integer to) {
 		Album album = albumRepository.findById(idalbum).orElse(null);
 		if(album!=null) {
-			return ResponseEntity.status(HttpStatus.OK).body(album);
+			return null;
 		}else
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
 		            "message", "Album con id "+idalbum+" non trovato!"));
