@@ -44,11 +44,4 @@ public class ApiController {
 		return ResponseEntity.status(HttpStatus.OK).body(Map.of(
 	            "message", message));
 	}
-	
-	@GetMapping(path = "/public/404", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Object> error404() {
-		return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
-	            "message", "Errore questa risorsa non sembra esistere"));
-	}
-	
 }
