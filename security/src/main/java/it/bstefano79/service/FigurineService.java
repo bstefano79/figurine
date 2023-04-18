@@ -11,6 +11,7 @@ import it.bstefano79.dto.FigurineTypesDto;
 import it.bstefano79.entity.Album;
 import it.bstefano79.entity.FigurineAlbum;
 import it.bstefano79.entity.FigurineTypes;
+import it.bstefano79.exception.FigurineRuntimeException;
 import it.bstefano79.repository.AlbumRepository;
 import it.bstefano79.repository.FigurineAlbumRepository;
 import it.bstefano79.repository.FigurineTypesRepository;
@@ -28,11 +29,11 @@ public class FigurineService {
 	
 	public void addsFigurineByAlbum(int from,int to, AlbumDto albumDto){
 		if(from>=to)
-			throw new RuntimeException("Error: "+from+" >= "+to);
+			throw new FigurineRuntimeException("Error: "+from+" >= "+to);
 		Album album = albumRepository.findById(albumDto.getId()).
-				orElseThrow(() -> new RuntimeException("Error: Album con id "+albumDto.getId()+" non trovato!"));
+				orElseThrow(() -> new FigurineRuntimeException("Error: Album con id "+albumDto.getId()+" non trovato!"));
 		FigurineTypes figType = figurineTypesRepository.getTypeDefault().
-				orElseThrow(() -> new RuntimeException("Error: Figurine Type is not found."));
+				orElseThrow(() -> new FigurineRuntimeException("Error: Figurine Type is not found."));
 		List<FigurineAlbum> lista = new ArrayList<FigurineAlbum>();
 		for(Integer i=from; i<=to;i++) {
 			FigurineAlbum fig = new FigurineAlbum();	

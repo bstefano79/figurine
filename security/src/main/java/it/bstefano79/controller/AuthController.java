@@ -26,6 +26,7 @@ import it.bstefano79.config.jwt.JwtUtils;
 import it.bstefano79.dto.UserDto;
 import it.bstefano79.entity.Role;
 import it.bstefano79.entity.User;
+import it.bstefano79.exception.FigurineRuntimeException;
 import it.bstefano79.models.ERole;
 import it.bstefano79.repository.RoleRepository;
 import it.bstefano79.repository.UserRepository;
@@ -94,20 +95,20 @@ public class AuthController {
 
     if (strRoles == null) {
       Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-          .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+          .orElseThrow(() -> new FigurineRuntimeException("Error: Role is not found."));
       roles.add(userRole);
     } else {
       strRoles.forEach(role -> {
         switch (role) {
         case "admin":
           Role adminRole = roleRepository.findByName(ERole.ROLE_ADMIN)
-              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+              .orElseThrow(() -> new FigurineRuntimeException("Error: Role is not found."));
           roles.add(adminRole);
 
           break;
         default:
           Role userRole = roleRepository.findByName(ERole.ROLE_USER)
-              .orElseThrow(() -> new RuntimeException("Error: Role is not found."));
+              .orElseThrow(() -> new FigurineRuntimeException("Error: Role is not found."));
           roles.add(userRole);
         }
       });

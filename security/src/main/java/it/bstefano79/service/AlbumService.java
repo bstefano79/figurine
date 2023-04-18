@@ -12,6 +12,7 @@ import it.bstefano79.dto.AlbumDto;
 import it.bstefano79.dto.AlbumWhitFigurineDto;
 import it.bstefano79.entity.Album;
 import it.bstefano79.entity.AlbumType;
+import it.bstefano79.exception.FigurineRuntimeException;
 import it.bstefano79.repository.AlbumRepository;
 import it.bstefano79.repository.AlbumTypeRepository;
 import it.bstefano79.repository.FigurineAlbumRepository;
@@ -58,12 +59,12 @@ public class AlbumService {
 		if (strTypes == null || strTypes.size()==0) {
 			//adds in table value default and search
 			AlbumType albumType = albumTypeRepository.getTypeDefault()//this.findAlbumTypeFromName("GENERICO")
-					.orElseThrow(() -> new RuntimeException("Error: Album Type is not found."));
+					.orElseThrow(() -> new FigurineRuntimeException("Error: Album Type is not found."));
 			types.add(albumType);
 		}else {
 			strTypes.forEach(type -> {
 				AlbumType albumType = this.findAlbumTypeFromName(type)
-						.orElseThrow(() -> new RuntimeException("Error: Album Type is not found."));
+						.orElseThrow(() -> new FigurineRuntimeException("Error: Album Type is not found."));
 				types.add(albumType);
 			});
 		}
