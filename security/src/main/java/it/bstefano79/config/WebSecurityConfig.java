@@ -61,7 +61,7 @@ public class WebSecurityConfig {
         .authorizeHttpRequests().requestMatchers("/api/auth/**"). permitAll()
         .requestMatchers("/api/public/**").permitAll()
         .requestMatchers("/api/admin/**").hasAnyAuthority(ERole.ROLE_ADMIN.toString())
-        .requestMatchers("/api/album/**").hasAnyAuthority(ERole.ROLE_ADMIN.toString(),ERole.ROLE_USER.toString())
+        .requestMatchers("/api/album/**").permitAll()//hasAnyAuthority(ERole.ROLE_ADMIN.toString(),ERole.ROLE_USER.toString())
         .and().exceptionHandling().accessDeniedPage("/api/public/404");
     
     http.authenticationProvider(authenticationProvider());
