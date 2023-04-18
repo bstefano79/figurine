@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.bstefano79.dto.AlbumDto;
 import it.bstefano79.dto.FigurineTypesDto;
+import it.bstefano79.exception.FigurineRuntimeException;
 import it.bstefano79.service.AlbumService;
 import it.bstefano79.service.FigurineService;
 import jakarta.validation.Valid;
@@ -44,10 +45,8 @@ public class AdminController {
 			figurineService.addsFigurineByAlbum(from, to, album);
 			return ResponseEntity.status(HttpStatus.OK).body(Map.of(
 		            "message", "Figurine da "+from+" al "+to+" aggiunte all'Album con id "+idalbum));
-		}else
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
-		            "message", "Album con id "+idalbum+" non trovato!"));
-				
+		}
+		throw new FigurineRuntimeException("Album con id "+idalbum+" non trovato!!!!!!!", HttpStatus.NOT_FOUND);
 	}
 	
 	@PostMapping("adds/figurine/{idalbum}/{type}/{from}/{to}")
@@ -60,9 +59,8 @@ public class AdminController {
 			figurineService.addsFigurineTypeByAlbum(type, from, to, album);
 			return ResponseEntity.status(HttpStatus.OK).body(Map.of(
 		            "message", "Figurine del tipo "+type+" da "+from+" al "+to+" aggiunte all'Album con id "+idalbum));
-		}else
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
-		            "message", "Album con id "+idalbum+" non trovato!"));
+		}
+		throw new FigurineRuntimeException("Album con id "+idalbum+" non trovato!!!!!!!", HttpStatus.NOT_FOUND);
 				
 	}
 	

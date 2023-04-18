@@ -1,6 +1,7 @@
 package it.bstefano79.exception;
 
 import java.util.Map;
+import java.util.Optional;
 
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.http.HttpHeaders;
@@ -25,9 +26,10 @@ public class ServiceExceptionHandler extends ResponseEntityExceptionHandler  {
   @ExceptionHandler(value = {FigurineRuntimeException.class })
   public ResponseEntity<Object> unknownException(Exception ex, WebRequest req) {
     
-    ex.printStackTrace();
-    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
-            "message", ex.getMessage(), "eorror", "qualcosa è andato storto", "status", HttpStatus.BAD_REQUEST));
+	FigurineRuntimeException e = (FigurineRuntimeException) ex;
+	HttpStatus status = e.getStatus()!=null?e.getStatus():HttpStatus.BAD_REQUEST;
+    return ResponseEntity.status(status).body(Map.of(
+            "message", e.getMessage(), "eorror", "qualcosa è andato storto", "status", status));
   }
   
   @Nullable

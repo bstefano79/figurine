@@ -77,12 +77,22 @@ public class AuthController {
 
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@Valid @RequestBody UserDto userDto) {
+    
+    if (userDto.getUsername()==null) {
+    	throw new FigurineRuntimeException("Username è un parametro obbligatorio", HttpStatus.NOT_ACCEPTABLE);
+    }
+    
+    if (userDto.getEmail()==null) {
+    	throw new FigurineRuntimeException("Email è un parametro obbligatorio", HttpStatus.NOT_ACCEPTABLE);
+    }
+    
     if (userRepository.existsByUsername(userDto.getUsername())) {
-      return ResponseEntity.badRequest().body("Error: Username is already taken!");
+    	throw new FigurineRuntimeException("Username "+userDto.getUsername()+" già registrato", HttpStatus.NOT_ACCEPTABLE);
     }
 
     if (userRepository.existsByEmail(userDto.getEmail())) {
-      return ResponseEntity.badRequest().body("Error: Email is already in use!");
+      //return ResponseEntity.badRequest().body("Error: Email is already in use!");
+    	throw new FigurineRuntimeException("Email "+userDto.getEmail()+" già registrata", HttpStatus.NOT_ACCEPTABLE);
     }
 
     // Create new user's account

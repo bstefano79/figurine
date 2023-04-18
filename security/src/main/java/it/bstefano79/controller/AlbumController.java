@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import it.bstefano79.dto.AlbumDto;
 import it.bstefano79.dto.AlbumWhitFigurineDto;
+import it.bstefano79.exception.FigurineRuntimeException;
 import it.bstefano79.service.AlbumService;
 
 @CrossOrigin(origins = "*", maxAge = 3600)
@@ -36,12 +37,10 @@ public class AlbumController {
 	@GetMapping("/{id}")
 	public ResponseEntity<?> getById(@PathVariable Integer id) {
 		AlbumDto album = albumService.findById(id);
-		if(album.getId()!=null) {
+		if(album!=null) {
 			return ResponseEntity.status(HttpStatus.OK).body(album);
-		}else
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
-		            "message", "Album con id "+id+" non trovato!"));
-				
+		}
+		throw new FigurineRuntimeException("Album con id "+id+" non trovato!!!!!!!", HttpStatus.NOT_FOUND);
 	}
 	
 	@GetMapping("/{id}/withfigurines")
@@ -49,9 +48,7 @@ public class AlbumController {
 		AlbumDto album = albumService.findByIdWithFigurines(id);
 		if(album.getId()!=null) {
 			return ResponseEntity.status(HttpStatus.OK).body(album);
-		}else
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
-		            "message", "Album con id "+id+" non trovato!"));
-				
+		}
+		throw new FigurineRuntimeException("Album con id "+id+" non trovato!!!!!!!", HttpStatus.NOT_FOUND);		
 	}
 }
