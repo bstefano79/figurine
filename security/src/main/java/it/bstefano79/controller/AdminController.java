@@ -36,14 +36,30 @@ public class AdminController {
 	https://roytuts.com/spring-data-jpa-batch-insertion/*/
 	
 	@PostMapping("adds/figurine/{idalbum}/{from}/{to}")
-	public ResponseEntity<?> getById(@PathVariable Integer idalbum,
+	public ResponseEntity<?> addFigurineFromTo(@PathVariable Integer idalbum,
 			@PathVariable Integer from,
 			@PathVariable Integer to) {
 		AlbumDto album = albumService.findById(idalbum);
 		if(album!=null) {
 			figurineService.addsFigurineByAlbum(from, to, album);
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
+			return ResponseEntity.status(HttpStatus.OK).body(Map.of(
 		            "message", "Figurine da "+from+" al "+to+" aggiunte all'Album con id "+idalbum));
+		}else
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
+		            "message", "Album con id "+idalbum+" non trovato!"));
+				
+	}
+	
+	@PostMapping("adds/figurine/{idalbum}/{type}/{from}/{to}")
+	public ResponseEntity<?> addFigurineTypesFromTo(@PathVariable Integer idalbum,
+			@PathVariable String type,
+			@PathVariable Integer from,
+			@PathVariable Integer to) {
+		AlbumDto album = albumService.findById(idalbum);
+		if(album!=null) {
+			figurineService.addsFigurineTypeByAlbum(type, from, to, album);
+			return ResponseEntity.status(HttpStatus.OK).body(Map.of(
+		            "message", "Figurine del tipo "+type+" da "+from+" al "+to+" aggiunte all'Album con id "+idalbum));
 		}else
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
 		            "message", "Album con id "+idalbum+" non trovato!"));

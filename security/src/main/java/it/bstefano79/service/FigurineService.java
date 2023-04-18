@@ -30,10 +30,23 @@ public class FigurineService {
 	public void addsFigurineByAlbum(int from,int to, AlbumDto albumDto){
 		if(from>=to)
 			throw new FigurineRuntimeException("Error: "+from+" >= "+to);
+		FigurineTypes figType =figurineTypesRepository.getTypeDefault().orElseThrow(
+				()->new FigurineRuntimeException("Non ho trovato il tipo figurina di default"));
+		addsFigurineTypeByAlbum(figType, from, to, albumDto);
+	}
+	
+	public void addsFigurineTypeByAlbum(String type, int from,int to, AlbumDto albumDto){
+		if(from>=to)
+			throw new FigurineRuntimeException("Error: "+from+" >= "+to);
+		FigurineTypes figType = figurineTypesRepository.findById(type).
+				orElseThrow(() -> new FigurineRuntimeException("Non ho trovato il tipo figurina "+type));
+		addsFigurineTypeByAlbum(figType, from, to, albumDto);
+		
+	}
+	
+	private void addsFigurineTypeByAlbum(FigurineTypes figType, int from,int to, AlbumDto albumDto){
 		Album album = albumRepository.findById(albumDto.getId()).
 				orElseThrow(() -> new FigurineRuntimeException("Error: Album con id "+albumDto.getId()+" non trovato!"));
-		FigurineTypes figType = figurineTypesRepository.getTypeDefault().
-				orElseThrow(() -> new FigurineRuntimeException("Error: Figurine Type is not found."));
 		List<FigurineAlbum> lista = new ArrayList<FigurineAlbum>();
 		for(Integer i=from; i<=to;i++) {
 			FigurineAlbum fig = new FigurineAlbum();	
