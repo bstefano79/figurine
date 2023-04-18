@@ -91,7 +91,6 @@ public class AuthController {
     }
 
     if (userRepository.existsByEmail(userDto.getEmail())) {
-      //return ResponseEntity.badRequest().body("Error: Email is already in use!");
     	throw new FigurineRuntimeException("Email "+userDto.getEmail()+" già registrata", HttpStatus.NOT_ACCEPTABLE);
     }
 
