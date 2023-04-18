@@ -17,6 +17,6 @@ public class ServiceExceptionHandler extends ResponseEntityExceptionHandler  {
     
     ex.printStackTrace();
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(Map.of(
-            "message", ex.getMessage()));
+            "message", ex.getMessage(), "eorror", "qualcosa è andato storto", "status", HttpStatus.BAD_REQUEST));
   }
 }
