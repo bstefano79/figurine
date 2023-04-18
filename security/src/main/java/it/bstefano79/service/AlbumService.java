@@ -37,8 +37,9 @@ public class AlbumService {
 	}
 	
 	public AlbumDto findById(Integer id){
-		
-		return new AlbumDto(albumRepository.findById(id).orElse(null));
+		Album album = albumRepository.findById(id).orElse(null);
+		if(album==null) return null;
+		return new AlbumDto(album);
 	}
 	
 	public AlbumWhitFigurineDto findByIdWithFigurines(Integer id){
@@ -47,7 +48,7 @@ public class AlbumService {
 	
 	
 	public Optional<AlbumType> findAlbumTypeFromName(String name){
-		return this.findAlbumTypeFromName(name);
+		return albumTypeRepository.findByName(name);
 	}
 	
 	public void newAlbum(AlbumDto albumDto){
