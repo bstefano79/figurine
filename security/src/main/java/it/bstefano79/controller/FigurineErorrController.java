@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import it.bstefano79.exception.FigurineRuntimeException;
 import jakarta.servlet.RequestDispatcher;
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -19,8 +20,9 @@ public class FigurineErorrController implements ErrorController{
 		 if (status != null) {
 	        Integer statusCode = Integer.valueOf(status.toString());
 	        if(statusCode == HttpStatus.NOT_FOUND.value()) {
-	        	 return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Map.of(
-	 	        		"message", "Questa risorsa non sembra esistere", "eorror", "qualcosa è andato storto", "status", HttpStatus.NOT_FOUND));
+	        	throw new FigurineRuntimeException("Questa risorsa non sembra esistere", HttpStatus.NOT_FOUND);
+	        }else if(statusCode == HttpStatus.FORBIDDEN.value()) {
+	        	throw new FigurineRuntimeException("Non hai i permessi per usare questa risorsa", HttpStatus.FORBIDDEN);
 	        }
 	       
 		 }
