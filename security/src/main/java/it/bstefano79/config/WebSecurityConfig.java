@@ -17,6 +17,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import it.bstefano79.config.jwt.AuthEntryPointJwt;
 import it.bstefano79.config.jwt.AuthTokenFilter;
 import it.bstefano79.models.ERole;
+import it.bstefano79.service.CustomerOAuth2UserService;
 import it.bstefano79.user.details.services.UserDetailsServiceImpl;
 
 @Configuration
@@ -27,6 +28,9 @@ public class WebSecurityConfig {
 
   @Autowired
   private AuthEntryPointJwt unauthorizedHandler;
+  
+  @Autowired
+  private CustomerOAuth2UserService customerOAuth2UserService;
 
   @Bean
   public AuthTokenFilter authenticationJwtTokenFilter() {
@@ -62,7 +66,11 @@ public class WebSecurityConfig {
         .requestMatchers("/api/public/**").permitAll()
         .requestMatchers("/api/admin/**").hasAnyAuthority(ERole.ROLE_ADMIN.toString())
         .requestMatchers("/api/album/**").hasAnyAuthority(ERole.ROLE_ADMIN.toString(),ERole.ROLE_USER.toString())
-        .anyRequest().permitAll();
+        .anyRequest().permitAll()
+        .and()
+        .oauth2Login()
+        .userInfoEndpoint()
+        .userService(customerOAuth2UserService);
     
     http.authenticationProvider(authenticationProvider());
 
