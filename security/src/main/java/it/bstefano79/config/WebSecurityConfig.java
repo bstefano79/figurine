@@ -61,16 +61,14 @@ public class WebSecurityConfig {
   public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
     http.cors().and().csrf().disable()
         .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-        .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
+        .sessionManagement().and()
         .authorizeHttpRequests().requestMatchers("/api/auth/**"). permitAll()
         .requestMatchers("/api/public/**").permitAll()
         .requestMatchers("/api/admin/**").hasAnyAuthority(ERole.ROLE_ADMIN.toString())
         .requestMatchers("/api/album/**").hasAnyAuthority(ERole.ROLE_ADMIN.toString(),ERole.ROLE_USER.toString())
         .anyRequest().permitAll()
         .and()
-        .oauth2Login()
-        .userInfoEndpoint()
-        .userService(customerOAuth2UserService);
+        .oauth2Login().defaultSuccessUrl("/oauth2/login/");
     
     http.authenticationProvider(authenticationProvider());
 
