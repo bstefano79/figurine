@@ -11,6 +11,7 @@ import io.jsonwebtoken.MalformedJwtException;
 import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.SignatureException;
 import io.jsonwebtoken.UnsupportedJwtException;
+import it.bstefano79.dto.UserDto;
 import it.bstefano79.user.details.services.UserDetailsImpl;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,6 +44,12 @@ public class JwtUtils {
       return null;
     }
   }
+  
+  public ResponseCookie generateJwtCookieFromUserDto(UserDto userPrincipal) {
+	    String jwt = generateTokenFromUsernameAndId(userPrincipal.getUsername(),userPrincipal.getId());
+	    ResponseCookie cookie = ResponseCookie.from(jwtCookie, jwt).path("/api").maxAge(24 * 60 * 60).httpOnly(true).build();
+	    return cookie;
+	  }
 
   public ResponseCookie generateJwtCookie(UserDetailsImpl userPrincipal) {
     String jwt = generateTokenFromUsernameAndId(userPrincipal.getUsername(),userPrincipal.getId());

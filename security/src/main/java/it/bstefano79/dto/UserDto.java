@@ -2,6 +2,8 @@ package it.bstefano79.dto;
 
 import java.util.List;
 
+import it.bstefano79.entity.User;
+
 public class UserDto {
 	private Long id;
 	
@@ -19,6 +21,15 @@ public class UserDto {
 		this.username = username;
 		this.email = email;
 		this.setRoles(roles);
+	}
+	
+	public UserDto(User user){
+		if(user!=null){
+			this.username=user.getUsername();
+			this.email=user.getEmail();
+			this.password=user.getPassword();
+			this.roles=user.getRoles().stream().map(x->x.getName().name()).toList();
+		}
 	}
 
 	public Long getId() {
