@@ -8,7 +8,6 @@ import org.springframework.security.authentication.dao.DaoAuthenticationProvider
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
@@ -17,7 +16,6 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 import it.bstefano79.config.jwt.AuthEntryPointJwt;
 import it.bstefano79.config.jwt.AuthTokenFilter;
 import it.bstefano79.models.ERole;
-import it.bstefano79.service.CustomerOAuth2UserService;
 import it.bstefano79.user.details.services.UserDetailsServiceImpl;
 
 @Configuration
@@ -28,9 +26,6 @@ public class WebSecurityConfig {
 
   @Autowired
   private AuthEntryPointJwt unauthorizedHandler;
-  
-  @Autowired
-  private CustomerOAuth2UserService customerOAuth2UserService;
 
   @Bean
   public AuthTokenFilter authenticationJwtTokenFilter() {
