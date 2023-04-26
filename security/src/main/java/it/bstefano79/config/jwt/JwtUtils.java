@@ -61,6 +61,11 @@ public class JwtUtils {
     ResponseCookie cookie = ResponseCookie.from(jwtCookie, null).path("/api").build();
     return cookie;
   }
+  
+  public ResponseCookie getCleanJwtCookieJsession() {
+	    ResponseCookie cookie = ResponseCookie.from("JSESSIONID", null).path("/").build();
+	    return cookie;
+	  }
 
   public String getUserNameFromJwtToken(String token) {
     return (String) Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody().get("username");

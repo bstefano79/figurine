@@ -63,7 +63,7 @@ public class WebSecurityConfig {
         .requestMatchers("/api/album/**").hasAnyAuthority(ERole.ROLE_ADMIN.toString(),ERole.ROLE_USER.toString())
         .anyRequest().permitAll()
         .and()
-        .oauth2Login().defaultSuccessUrl("/oauth2/login/");
+        .oauth2Login().defaultSuccessUrl("/oauth2/login/",true);
     
     http.authenticationProvider(authenticationProvider());
 

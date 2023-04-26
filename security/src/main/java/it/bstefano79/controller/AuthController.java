@@ -131,10 +131,14 @@ public class AuthController {
             "message", "Utente Registrato con successo!"));
   }
 
-  @PostMapping("/signout")
+  @RequestMapping("/signout")
   public ResponseEntity<?> logoutUser() {
+	HttpHeaders h = new HttpHeaders();
     ResponseCookie cookie = jwtUtils.getCleanJwtCookie();
-    return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, cookie.toString())
+    h.add(HttpHeaders.SET_COOKIE, cookie.toString());
+    cookie = jwtUtils.getCleanJwtCookieJsession();
+    h.add(HttpHeaders.SET_COOKIE, cookie.toString());
+    return ResponseEntity.ok().headers(h)
         .body("You've been signed out!");
   }
 }
