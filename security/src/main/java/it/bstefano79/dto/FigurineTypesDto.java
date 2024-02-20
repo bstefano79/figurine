@@ -2,6 +2,8 @@ package it.bstefano79.dto;
 
 import java.util.Objects;
 
+import it.bstefano79.entity.Album;
+import it.bstefano79.entity.FigurineAlbum;
 import it.bstefano79.entity.FigurineTypes;
 
 public class FigurineTypesDto {
@@ -19,11 +21,24 @@ public class FigurineTypesDto {
 		this.name = name;
 	}
 	
-	public FigurineTypesDto(FigurineTypes f) {
-		super();
-		this.id = f.getId();
-		this.name = f.getName();
+	public static FigurineTypesDto fromFigurineTypes(FigurineTypes ft) {
+		if(ft==null) return null;
+		FigurineTypesDto ftDto = new FigurineTypesDto();
+		
+		ftDto.setId(ft.getId());
+		ftDto.setName(ft.getName());
+		
+		return ftDto;
+	
 	}
+	
+	public static FigurineTypes toFigurineTypes(FigurineTypesDto ftDto) {
+		if(ftDto==null) return null;
+		FigurineTypes ft = new FigurineTypes();
+        ft.setId(ftDto.getId());
+        ft.setName(ftDto.getName());
+        return ft;
+    }
 
 
 	public String getId() {

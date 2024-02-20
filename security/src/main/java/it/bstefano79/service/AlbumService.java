@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import it.bstefano79.dto.AlbumDto;
+import it.bstefano79.dto.AlbumTypeDto;
 import it.bstefano79.dto.AlbumWhitFigurineDto;
 import it.bstefano79.entity.Album;
 import it.bstefano79.entity.AlbumType;
@@ -29,17 +30,18 @@ public class AlbumService {
 	private FigurineAlbumRepository figurineAlbumRepository;
 	
 	public List<AlbumDto> findAll() {
-		return albumRepository.findAll().stream().map(x -> new AlbumDto(x)).toList();
+		return albumRepository.findAll().stream().map(x -> AlbumDto.fromAlbum(x)).toList();
 	}
 	
 	public List<AlbumWhitFigurineDto> findAllWithFigurines() {
-		return albumRepository.findAll().stream().map(x -> new AlbumWhitFigurineDto(x,figurineAlbumRepository.findAllByIdAlbum(x.getId()))).toList();
+		List<AlbumWhitFigurineDto> pippo= albumRepository.findAll().stream().map(x -> new AlbumWhitFigurineDto(x,figurineAlbumRepository.findAllByIdAlbum(x.getId()))).toList();
+		return pippo;
 	}
 	
 	public AlbumDto findById(Integer id){
 		Album album = albumRepository.findById(id).orElse(null);
 		if(album==null) return null;
-		return new AlbumDto(album);
+		return AlbumDto.fromAlbum(album);
 	}
 	
 	public AlbumWhitFigurineDto findByIdWithFigurines(Integer id){
@@ -51,26 +53,14 @@ public class AlbumService {
 		return albumTypeRepository.findByName(name);
 	}
 	
+	public void updateAlbum(AlbumDto albumDto) {
+		Album albumDb = albumRepository.findById(albumDto.getId()).orElseThrow(() -> new FigurineRuntimeException("Error: Album not found id="+albumDto.getId()));
+		albumDb = AlbumDto.toAlbum(albumDto);
+		save(albumDb);
+	}
+	
 	public void newAlbum(AlbumDto albumDto){
-		Album album = new Album(albumDto.getName());
-		
-		List<String> strTypes = albumDto.getTypes();
-		Set<AlbumType> types = new HashSet<>();
-		
-		if (strTypes == null || strTypes.size()==0) {
-			//adds in table value default and search
-			AlbumType albumType = albumTypeRepository.getTypeDefault()//this.findAlbumTypeFromName("GENERICO")
-					.orElseThrow(() -> new FigurineRuntimeException("Error: Album Type is not found."));
-			types.add(albumType);
-		}else {
-			strTypes.forEach(type -> {
-				AlbumType albumType = this.findAlbumTypeFromName(type)
-						.orElseThrow(() -> new FigurineRuntimeException("Error: Album Type is not found."));
-				types.add(albumType);
-			});
-		}
-		album.setTypes(types);
-		this.save(album);
+		this.save(AlbumDto.toAlbum(albumDto));
 	}
 	
 	public void save(Album album){

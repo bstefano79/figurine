@@ -1,8 +1,12 @@
 package it.bstefano79.entity;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
+import it.bstefano79.dto.AlbumDto;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
@@ -33,15 +37,19 @@ public class Album {
 		@JoinTable(name = "album_types", joinColumns =
 			@JoinColumn(name = "album_id", referencedColumnName = "id"), 
 	  			inverseJoinColumns =  @JoinColumn(name = "type_id"))
-	private Set<AlbumType> types = new HashSet<>();
+	private List<AlbumType> types;
 	
 	public Album(){
 		
 	}
 	
-	public Album(@NotBlank @NotNull @Size(max = 50) String name) {
-		super();
-		this.name = name;
+	public void Update(AlbumDto a) {
+		this.id=a.getId();
+		this.name=a.getName();
+		this.types=new ArrayList<AlbumType>();
+		//a.getTypes().stream().forEach(t->this.types.add(t));
+		//this.types=a.getTypes();
+                
 	}
 
 	public Integer getId() {
@@ -60,11 +68,11 @@ public class Album {
 		this.name = name;
 	}
 
-	public Set<AlbumType> getTypes() {
+	public List<AlbumType> getTypes() {
 		return types;
 	}
 
-	public void setTypes(Set<AlbumType> types) {
+	public void setTypes(List<AlbumType> types) {
 		this.types = types;
 	}
 

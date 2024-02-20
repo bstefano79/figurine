@@ -40,4 +40,12 @@ public class AlbumType {
 		this.name = name;
 	}
 
+	public boolean isType_default() {
+		return type_default;
+	}
+
+	public void setType_default(boolean type_default) {
+		this.type_default = type_default;
+	}
+
 }

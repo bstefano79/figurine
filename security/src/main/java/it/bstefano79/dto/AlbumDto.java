@@ -9,19 +9,31 @@ public class AlbumDto {
 	
 	private String name;
 	
-	private List<String> types;
+	private List<AlbumTypeDto> types;
 	
 	public AlbumDto() {
 		
 	}
 	
-	public AlbumDto(Album album) {
+	public static AlbumDto fromAlbum(Album album) {
 		if(album!=null) {
-			this.name=album.getName();
-			this.id=album.getId();
-			this.types=album.getTypes().stream().map(x->x.getName()).toList();
+			AlbumDto a = new AlbumDto();
+	
+			a.name=album.getName();
+			a.id=album.getId();
+			a.types = album.getTypes().stream().map(x -> AlbumTypeDto.fromAlbumType(x)).toList();
+			return a;
 		}
+		return null;
 	}
+	
+	public static Album toAlbum(AlbumDto a) {
+		Album album = new Album();
+        album.setId(a.getId());
+        album.setName(a.getName());
+        album.setTypes(a.getTypes().stream().map(x -> AlbumTypeDto.toAlbumType(x)).toList());
+        return album;
+    }
 
 	public Integer getId() {
 		return id;
@@ -39,11 +51,11 @@ public class AlbumDto {
 		this.name = name;
 	}
 
-	public List<String> getTypes() {
+	public List<AlbumTypeDto> getTypes() {
 		return types;
 	}
 
-	public void setTypes(List<String> types) {
+	public void setTypes(List<AlbumTypeDto> types) {
 		this.types = types;
 	}
 }

@@ -59,6 +59,6 @@ public class FigurineService {
 	}
 	
 	public List<FigurineTypesDto> returnAllTypes(){
-		return figurineTypesRepository.findAll().stream().map(t->new FigurineTypesDto(t)).toList();
+		return figurineTypesRepository.findAll().stream().map(t->FigurineTypesDto.fromFigurineTypes(t)).toList();
 	}
 }
