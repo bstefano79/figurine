@@ -47,9 +47,9 @@ public class AdminAlbumController {
 	
 	@PostMapping("album/update")
 	public ResponseEntity<?> updateAlbum(@Valid @RequestBody AlbumDto albumDto) {
-		this.albumService.newAlbum(albumDto);
+		this.albumService.updateAlbum(albumDto);
 		
 		return ResponseEntity.status(HttpStatus.OK).body(Map.of(
-	            "message", "Album salvato con successo!"));
+	            "message", "Album modificato con successo!"));
 	}
 }

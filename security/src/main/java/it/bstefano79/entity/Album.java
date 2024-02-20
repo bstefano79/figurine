@@ -42,15 +42,6 @@ public class Album {
 	public Album(){
 		
 	}
-	
-	public void Update(AlbumDto a) {
-		this.id=a.getId();
-		this.name=a.getName();
-		this.types=new ArrayList<AlbumType>();
-		//a.getTypes().stream().forEach(t->this.types.add(t));
-		//this.types=a.getTypes();
-                
-	}
 
 	public Integer getId() {
 		return id;

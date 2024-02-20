@@ -34,8 +34,7 @@ public class AlbumService {
 	}
 	
 	public List<AlbumWhitFigurineDto> findAllWithFigurines() {
-		List<AlbumWhitFigurineDto> pippo= albumRepository.findAll().stream().map(x -> new AlbumWhitFigurineDto(x,figurineAlbumRepository.findAllByIdAlbum(x.getId()))).toList();
-		return pippo;
+		return albumRepository.findAll().stream().map(x -> new AlbumWhitFigurineDto(x,figurineAlbumRepository.findAllByIdAlbum(x.getId()))).toList();
 	}
 	
 	public AlbumDto findById(Integer id){
