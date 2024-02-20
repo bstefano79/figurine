@@ -2,6 +2,8 @@ package it.bstefano79.dto;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import it.bstefano79.entity.User;
 
 public class UserDto {
@@ -11,6 +13,7 @@ public class UserDto {
 	
 	private String email;
 	
+	@JsonIgnore
 	private String password;
 	
 	private List<String> roles;
