@@ -41,10 +41,7 @@ public class OAuth2Controller {
 		UserDto usertDto = new UserDto(user);
 		ResponseCookie jwtCookie = jwtUtils.generateJwtCookieFromUserDto(usertDto);
 		return ResponseEntity.ok().header(HttpHeaders.SET_COOKIE, jwtCookie.toString())
-		        .body(new UserDto(usertDto.getId(),
-		        		usertDto.getUsername(),
-		        		usertDto.getEmail(),
-		        		usertDto.getRoles()));
+		        .body(usertDto);
 	}
 
 }
