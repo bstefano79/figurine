@@ -27,7 +27,7 @@ public class FigurineAlbum {
 	
 	@ManyToOne
 	@JoinColumn(name="figurine_types")
-	private FigurineTypes figurineTypes = new FigurineTypes("F","Figurine");
+	private FigurineTypes figurineTypes;// = new FigurineTypes("F","Figurine");
 
 	public String getValue() {
 		return value;
