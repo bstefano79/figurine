@@ -1,5 +1,6 @@
 package it.bstefano79.service;
 
+import java.lang.reflect.Field;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Optional;
@@ -28,6 +29,21 @@ public class AlbumService {
 	
 	@Autowired
 	private FigurineAlbumRepository figurineAlbumRepository;
+	
+	public void updateAlbumField(Long id, String fieldName, Object fieldValue) {
+        Album existingAlbum = albumRepository.findById(id)
+                .orElseThrow(() -> new FigurineRuntimeException("Album not found with id: " + id));
+
+        try {
+            Field field = Album.class.getDeclaredField(fieldName);
+            field.setAccessible(true);
+            field.set(existingAlbum, fieldValue);
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            throw new RuntimeException("Unable to update field: " + fieldName, e);
+        }
+
+        albumRepository.save(existingAlbum);
+    }
 	
 	public List<AlbumDto> findAll() {
 		return albumRepository.findAll().stream().map(x -> AlbumDto.fromAlbum(x)).toList();

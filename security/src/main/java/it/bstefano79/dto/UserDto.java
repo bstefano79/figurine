@@ -13,10 +13,13 @@ public class UserDto {
 	
 	private String email;
 	
-	@JsonIgnore
 	private String password;
 	
 	private List<String> roles;
+	
+	public UserDto() {
+		
+	}
 
 	public UserDto(Long id, String username, String email, List<String> roles) {
 		super();
@@ -31,7 +34,6 @@ public class UserDto {
 			this.id=user.getId();
 			this.username=user.getUsername();
 			this.email=user.getEmail();
-			this.password=user.getPassword();
 			this.roles=user.getRoles().stream().map(x->x.getName().name()).toList();
 		}
 	}

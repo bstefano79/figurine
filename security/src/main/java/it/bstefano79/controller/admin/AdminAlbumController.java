@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import it.bstefano79.dto.AlbumDto;
@@ -44,6 +46,16 @@ public class AdminAlbumController {
 		return ResponseEntity.status(HttpStatus.OK).body(Map.of(
 	            "message", "Album salvato con successo!"));
 	}
+	
+	@PutMapping("album/update/field/{id}/{fieldName}")
+    public ResponseEntity<?> updateAlbumField(
+            @PathVariable Long id,
+            @PathVariable String fieldName,
+            @RequestBody String fieldValue) {
+        albumService.updateAlbumField(id, fieldName, fieldValue);
+        return ResponseEntity.status(HttpStatus.OK).body(Map.of(
+	            "message", "Field "+fieldName+" modificato con successo"));
+    }
 	
 	@PostMapping("album/update")
 	public ResponseEntity<?> updateAlbum(@Valid @RequestBody AlbumDto albumDto) {
